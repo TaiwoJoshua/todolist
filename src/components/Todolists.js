@@ -27,7 +27,7 @@ export default function Todolists(props){
                     <span>{props.showAdd ? "Close" : "Add"} New To-Do Item</span>
                 </span>
                 <span>
-                    {props.showAdd && <input type="text" className="add-todo-input" onChange={props.newTodoChange} placeholder="Your New To-Do Item" value={props.newTodoItem} />}
+                    {props.showAdd && <input type="text" className="add-todo-input" onChange={props.newTodoChange} maxLength={100} placeholder="Your New To-Do Item" value={props.newTodoItem} />}
                     {props.showAdd && <button className="btn" onClick={() => props.addNewTodoItem(props.data.id)}>Add</button>}
                 </span>
             </div>
