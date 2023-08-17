@@ -1,0 +1,306 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.App{
+  width: 100%;
+  height: 100vh;
+}
+
+.navbar{
+  width: 100%;
+  padding: 20px;
+  background-color: #78C1F3;
+  color: white;
+  display: flex;
+}
+
+.main{
+  width: 100%;
+  height: calc(100vh - 68px);
+  display: flex;
+  justify-content: space-between;
+  background-color: #F8FDCF;
+}
+
+.sidetodos{
+  width: 30%;
+  max-width: 300px;
+  height: 100%;
+  background-color: white;
+  overflow-y: auto;
+}
+
+.sidetodos::-webkit-scrollbar{
+  width: 0.5em;
+}
+.sidetodos::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background: white;
+}
+.sidetodos::-webkit-scrollbar-thumb{
+  background-color: black;
+  border: 0.5px solid rgb(242, 242, 242);
+}
+:root{
+  scrollbar-color: black white;
+  scrollbar-width: thin;
+}
+
+.sidetodos>ul{
+  width: 100%;
+  height: 100%;
+}
+
+.sidetodos>ul>div>li{
+  width: 100%;
+  padding: 20px 10px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  transition: all 0.5s ease-in-out;
+}
+
+.sidetodos>ul>div>li::after{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  background-color: #0C356A;
+  z-index: -1;
+  transition: all 0.5s ease-in-out;
+}
+
+.sidetodos>ul>div>li.active{
+  background-color: #0C356A;
+  color: white;
+}
+
+.sidetodos>ul>div>li:hover::after{
+  transform: scaleY(1);
+}
+
+.sidetodos>ul>div>li:hover{
+  color: white;
+}
+
+.sidetodos>ul>hr{
+  border: 1px solid black;
+  width: 100%;
+}
+
+.sidetodos>ul>div>li>span{
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.trash-wrapper{
+  width: 30px !important;
+  height: 100%;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.trash-wrapper:hover>.fa-trash-alt{
+  transform: scale(0.9);
+}
+
+.vertical-gap{
+  width: 10px;
+  height: 100%;
+}
+
+.todolists-section{
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.todolists-section>input{
+  width: 100%;
+  font-size: 1.5em;
+  font-weight: bolder;
+  border: none;
+  outline: none;
+}
+
+.todolists-add{
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.addicon-btn{
+  cursor: pointer;
+  background-color: #78C1F3;
+  border: none;
+  color: white;
+  border-radius: 3px;
+  height: 25px;
+  width: 25px;
+  margin-right: 10px;
+}
+
+.btn{
+  padding: 5px 15px;
+  cursor: pointer;
+  background-color: #0C356A;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+
+.addtodo-btn{
+ background-color: white;
+ color: #78C1F3; 
+ margin: 0 15px;
+}
+
+.add-todo-input{
+  padding: 5px;
+  outline: none;
+  margin: 0 10px;
+  border: 1px solid black;
+}
+
+.add-todo-input:focus{
+  border: 1px solid #78C1F3;
+}
+
+.todolists-wrapper{
+  width: 100%;
+  height: 100%;
+  height: calc(100% - 67px);
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.todolists{
+  width: 100%;
+  height: 100%;
+  padding: 10px 10px 10px 0;
+  overflow-y: auto;
+}
+
+.todolists::-webkit-scrollbar{
+  width: 0.5em;
+}
+.todolists::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background: white;
+}
+.todolists::-webkit-scrollbar-thumb{
+  background-color: black;
+  border: 0.5px solid rgb(242, 242, 242);
+}
+
+.todo{
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+
+.todo>label{
+  width: 100%;
+  margin: 0 5px;
+}
+
+.todo>i.fa-trash-alt{
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.todolists-options{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.no-todos {
+  width: 100%;
+  height: calc(100vh - 68px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke;
+}
+
+.first-todo {
+  cursor: pointer;
+  background-color: #0C356A;
+  border: none;
+  color: white;
+  border-radius: 3px;
+  padding: 1rem;
+  margin-top: 5px;
+}
+
+.emptytodo-wrappper{
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptytodo-wrappper>button{
+  padding: 10px 25px;
+  cursor: pointer;
+  background-color: #0C356A;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+.todolists-status{
+  margin-top: 5px;
+}
+
+@media screen and (max-width: 600px){
+  .App, .main, .todolists-wrapper{
+    height: auto;
+  }
+
+  .main{
+    flex-direction: column;
+  }
+
+  .sidetodos{
+    width: 100%;
+    max-width: 100%;
+    min-height: 300px;
+    max-height: 400px;
+  }
+
+  .vertical-gap{
+    width: 100%;
+    height: 10px;
+  }
+
+  .todolists-wrapper{
+    min-height: 300px;
+    max-height: 400px;
+  }
+}
