@@ -2,14 +2,21 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Sidetodos from './components/Sidetodos';
 import Todolists from './components/Todolists';
+import allQuotes from './quotes';
 import {nanoid} from 'nanoid';
 
 export default function App() {
-
   const [showAdd, setShowAdd] = React.useState(false);
   const [todos, setTodos] = React.useState(() => JSON.parse(localStorage.getItem("teejayMyTodos")) || []);
-  const [currTodos, setCurrTodos] = React.useState(todos[0]);
+  const [currTodos, setCurrTodos] = React.useState(todos[0] || {todos: []});
   const [newTodoItem, setNewTodoItem] = React.useState("");
+  const [completed, setCompleted] = React.useState(0);
+  const [quotes, setQuotes] = React.useState(allQuotes);
+  const [currQuote, setCurrQuote] = React.useState(() => quotes[Math.floor(Math.random() * quotes.length)]);
+  const [showQuote, setShowQuote] = React.useState(true);
+  const [darkMode, setDarkMode] = React.useState(() => {
+    return localStorage.getItem("teejayMyTodosDarkMode") ? JSON.parse(localStorage.getItem("teejayMyTodosDarkMode")) : ((window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches));
+  });
 
   function toggleShowAdd(){
     setShowAdd(oldShowAdd => !oldShowAdd);
@@ -72,7 +79,7 @@ export default function App() {
     if(newTodoItem !== ""){
       const newTodos = todos.map(todo => {
         if(todo.id === id){
-          return {...todo, todos: [...todo.todos, {title: newTodoItem, completed: false}]} 
+          return {...todo, todos: [{title: newTodoItem, completed: false}, ...todo.todos]} 
         }else{
           return todo;
         };
@@ -164,6 +171,23 @@ export default function App() {
     setShowAdd(false);
   }
 
+  function toggleDarkMode(){
+    setDarkMode(oldDarkMode => !oldDarkMode);
+  }
+
+  function checkCompleted(currTodos){
+    let total = 0;
+    for (let i = 0; i < currTodos.todos.length; i++) {
+        const element = currTodos.todos[i];
+        if(element.completed){
+            total++;
+        }
+    }
+    if(total === currTodos.todos.length){
+      return total > 0 ? true : false;
+    };
+  }
+
   React.useEffect(() => {
     localStorage.setItem("teejayMyTodos", JSON.stringify(todos));
     todos.length > 0 && todos.map(todo => {
@@ -176,15 +200,46 @@ export default function App() {
     todos.length > 0 && document.getElementById("title" + currTodos.id).classList.add("active");
   }, [currTodos, todos]);
 
-  const titleTodos = todos.length > 0 && todos.map(todo => <div key={`title${todo.id}`} onClick={() => changeCurrTodo(todo.id)}><li id={`title${todo.id}`} className='todoList'><span>{todo.title}</span> <span className="trash-wrapper"><i className="fas fa-trash-alt" onClick={(event) => deleteTodo(event, todo.id)}></i></span></li><hr/></div>);
+  React.useEffect(() => {
+    setQuotes(quotes);
+
+    const interval = setInterval(() => {
+      const randNum = Math.floor(Math.random() * quotes.length);
+      setShowQuote(oldShowQuote => !oldShowQuote);
+      setTimeout(() => {
+        setCurrQuote(quotes[randNum]);
+        setShowQuote(oldShowQuote => !oldShowQuote);
+      }, 500);
+    }, 10000);
+    
+    return () => {clearInterval(interval)};
+  }, [quotes]);
+
+  React.useEffect(() => {
+    let total = 0;
+    for (let i = 0; i < currTodos.todos.length; i++) {
+        const element = currTodos.todos[i];
+        if(element.completed){
+            total++;
+        }
+    }
+    setCompleted(total);
+  }, [currTodos.todos]);
+
+  React.useEffect(() => {
+    localStorage.setItem("teejayMyTodosDarkMode", darkMode);
+  }, [darkMode]);
+
+  const titleTodos = todos.length > 0 && todos.map(todo => <div key={`title${todo.id}`} onClick={() => changeCurrTodo(todo.id)}><li id={`title${todo.id}`} className='todoList'><span><div className={checkCompleted(todo) ? "fas fa-check" : ""}> <span style={{color: darkMode ? "white" : "black"}}>{todo.title}</span></div></span> <span className="trash-wrapper"><i className="fas fa-trash-alt" onClick={(event) => deleteTodo(event, todo.id)}></i></span></li><hr/></div>);
 
   return (
-    <div className="App">
-      <Navbar addNewTodo={addNewTodo} todos={todos} />
+    <div className={darkMode ? "App darkMode" : "App"}>
+      <Navbar addNewTodo={addNewTodo} todos={todos} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <div className='quotes'><i style={{color: showQuote ? darkMode ? "white" : "black" : "transparent"}}>{currQuote}</i></div>
       {todos.length > 0
       ? 
       <main className="main">
-          <Sidetodos data={titleTodos} emptyTodo={emptyTodo} />
+          <Sidetodos data={titleTodos} emptyTodo={emptyTodo} total={currTodos.todos.length} completed={completed} />
           <section className="vertical-gap"></section>
           <Todolists 
             data={currTodos} 
@@ -198,6 +253,7 @@ export default function App() {
             titleChange={titleChange}
             clearCompleted={clearCompleted}
             clearAllTodos={clearAllTodos}
+            completed={completed}
           />
       </main>
       :
