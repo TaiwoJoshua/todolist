@@ -113,8 +113,12 @@ export default function App() {
   function deleteTodo(event, id){
     event.stopPropagation();
     const newTodos = todos.filter(oldTodo => oldTodo.id !== id);
-    setTodos(newTodos);
-    setCurrTodos(newTodos[0]);
+    if(newTodos.length === 0){
+      setTodos([]);
+    }else{
+      setTodos(newTodos);
+      setCurrTodos(newTodos[0]);
+    }
   }
 
   function titleChange(event, id){
@@ -147,7 +151,7 @@ export default function App() {
         if(oldTodo.id === id){
           return {...oldTodo, todos: []};
         }else{
-          return oldTodo
+          return oldTodo;
         }
       })
     });

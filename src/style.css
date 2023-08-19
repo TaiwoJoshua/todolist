@@ -30,7 +30,7 @@
 }
 
 .quotes>i{
-  font-size: 1.1em;
+  font-size: 0.9em;
   letter-spacing: 1px;
   text-align: center;
   transition: color 0.3s ease-in-out;
@@ -506,6 +506,10 @@
 }
 
 @media screen and (max-width: 600px){
+  .navbar{
+    padding: 30px 20px;
+  }
+
   .App, .main, .todolists-wrapper{
     height: auto;
   }
