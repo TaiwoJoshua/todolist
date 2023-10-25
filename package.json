@@ -1,5 +1,6 @@
 {
-  "homepage": "http://taiwojoshua.github.io/todolist",
+  "homepage": ".",
+  "github-homepage": "http://taiwojoshua.github.io/todolist",
   "name": "todolist",
   "version": "0.1.0",
   "private": true,

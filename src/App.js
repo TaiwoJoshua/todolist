@@ -55,12 +55,14 @@ export default function App() {
     const {name, checked} = event.target;
     const newTodos = todos.map(todo => {
       if(todo.id === id){
-        const newTodo = todo.todos.map(tod => {
+        const newTodo = [];
+        todo.todos.map(tod => {
           if(tod.title === name){
-            return {...tod, completed: checked};
+            newTodo.unshift({...tod, completed: checked});
           }else{
-            return tod;
+            newTodo.push(tod);
           }
+          return tod;
         });
         return {...todo, todos: newTodo};
       }else{
