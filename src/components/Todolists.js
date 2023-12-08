@@ -4,6 +4,14 @@ export default function Todolists(props){
     const todoList = props.data.todos.map(todo => {
         return <div className="todo" key={props.data.title + todo.title}><input type="checkbox" id={props.data.title + todo.title} name={todo.title} onChange={(event) => props.handleCheck(event, props.data.id)} checked={todo.completed} /><label htmlFor={props.data.title + todo.title}>{todo.title}</label><i className="fas fa-trash-alt" onClick={(event) => props.deleteTodoItem(event, props.data.id, todo.title)}></i></div>;
     });
+    const inputRef = React.useRef();
+
+    React.useEffect(() => {
+        if(props.showAdd){
+            inputRef.current.focus()
+        }
+    }, [props.showAdd])
+    
 
     return(
         <section className="todolists-section">
@@ -14,7 +22,7 @@ export default function Todolists(props){
                     <span>{props.showAdd ? "Close" : "Add"} New To-Do Item</span>
                 </span>
                 <span>
-                    {props.showAdd && <input type="text" className="add-todo-input" onChange={props.newTodoChange} maxLength={100} placeholder="Your New To-Do Item" value={props.newTodoItem} />}
+                    {props.showAdd && <input ref={inputRef} type="text" className="add-todo-input" onChange={props.newTodoChange} maxLength={100} placeholder="Your New To-Do Item" value={props.newTodoItem} />}
                     {props.showAdd && <button className="btn" onClick={() => props.addNewTodoItem(props.data.id)}>Add</button>}
                 </span>
             </div>

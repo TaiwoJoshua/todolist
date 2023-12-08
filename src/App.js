@@ -73,7 +73,7 @@ export default function App() {
   }
 
   function newTodoChange(event){
-    const {value} = event.target;
+    const { value } = event.target;
     setNewTodoItem(value);
   }
 
@@ -124,7 +124,7 @@ export default function App() {
   }
 
   function titleChange(event, id){
-    const {value} = event.target;
+    const { value } = event.target;
     setTodos(oldTodos => oldTodos.map(todo => todo.id === id ? {...todo, title: value} : todo));
   }
 
