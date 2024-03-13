@@ -8,14 +8,14 @@ export default function Todolists(props){
 
     React.useEffect(() => {
         if(props.showAdd){
-            inputRef.current.focus()
+            inputRef.current.focus();
         }
     }, [props.showAdd])
     
 
     return(
         <section className="todolists-section">
-            <input type="text" name="todo-title" maxLength={50} onChange={(event) => props.titleChange(event, props.data.id)} value={props.data.title} placeholder="To-Do List Title" />
+            <input type="text" name="todo-title" maxLength={50} onBlur={(event) => props.titleChange(event, props.data.id)} defaultValue={props.data.title} placeholder="To-Do List Title" />
             <div className="todolists-add">
                 <span>
                     <button className="addicon-btn" onClick={props.toggleShow}><i className={!props.showAdd ? "fas fa-plus" : "fas fa-times"}></i></button>
