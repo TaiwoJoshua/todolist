@@ -36,7 +36,7 @@ export default function Todolists(props) {
         name="todo-title"
         maxLength={50}
         onBlur={(event) => props.titleChange(event, props.data.id)}
-        value={props.data.title}
+        defaultValue={props.data.title}
         placeholder="To-Do List Title"
       />
       <div className="todolists-add">
